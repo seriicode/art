@@ -20,6 +20,14 @@ export type Experience = {
   text: string;
 };
 
+export type Journey = {
+  num: string;
+  title: string;
+  kicker: string;
+  image: string;
+  text: string;
+};
+
 export type Stat = {
   value: string;
   label: string;
@@ -135,6 +143,78 @@ export const awards: Piece[] = [
   piece("prize-finalist", "photo-1470071459604-3b5ec3a7fe05", "Top 10 Finalist", "Landscape Open", "2023", "#8aa0a8", "#1c2830"),
 ];
 
+export const journeyPages: Journey[][] = [
+  [
+    {
+      num: "01",
+      title: "Art Workshops",
+      kicker: "Teaching & Sharing",
+      image: "/art/exp-workshops.jpg?v=1",
+      text: "Conducting art workshops to inspire and share the beauty of painting.",
+    },
+    {
+      num: "02",
+      title: "Exhibitions",
+      kicker: "Art in the World",
+      image: "/art/exp-exhibitions.jpg?v=1",
+      text: "Participation in exhibitions, showcasing my artworks to a wider audience.",
+    },
+    {
+      num: "03",
+      title: "Artistic Research",
+      kicker: "Exploration & Study",
+      image: "/art/exp-research.jpg?v=1",
+      text: "Continuous exploration of artistic techniques and classical traditions.",
+    },
+  ],
+  [
+    {
+      num: "01",
+      title: "Studio Residency",
+      kicker: "Shared Atelier",
+      image: "/art/exp-exhibitions.jpg?v=1",
+      text: "A season in a shared studio, ending with an open weekend of new portraits.",
+    },
+    {
+      num: "02",
+      title: "Solo Exhibition",
+      kicker: "Gallery Nord",
+      image: "/art/exp-research.jpg?v=1",
+      text: "Twenty-four canvases over three weeks, plus a live painting evening.",
+    },
+    {
+      num: "03",
+      title: "Commissions",
+      kicker: "Private Rooms",
+      image: "/art/exp-workshops.jpg?v=1",
+      text: "Murals and private paintings for homes, small hotels and quiet rooms.",
+    },
+  ],
+  [
+    {
+      num: "01",
+      title: "Open Studios",
+      kicker: "Meet the Work",
+      image: "/art/exp-research.jpg?v=1",
+      text: "Weekend visits where new paintings are shown in the room they were made.",
+    },
+    {
+      num: "02",
+      title: "Teaching Days",
+      kicker: "Small Groups",
+      image: "/art/exp-workshops.jpg?v=1",
+      text: "Short classes on colour, petals and the patience of looking.",
+    },
+    {
+      num: "03",
+      title: "Sketch Archive",
+      kicker: "Studies Kept",
+      image: "/art/exp-exhibitions.jpg?v=1",
+      text: "Drawings from museums, gardens and the hours between exhibitions.",
+    },
+  ],
+];
+
 export const experiences: Experience[] = [
   {
     place: "Atelier Lumen",
@@ -188,13 +268,146 @@ export const about = {
   ),
 };
 
-export const slides: Piece[] = [
-  hero.main,
-  oils.items[0],
-  oils.items[4],
-  landscape.image,
-  portraits.items[0],
+function localPiece(id: string, file: string, title: string): Piece {
+  return {
+    id,
+    src: `/art/${file}?v=6`,
+    alt: title,
+    title,
+    medium: "Oil on canvas",
+    year: "2024",
+    tone: "#140e0c",
+  };
+}
+
+export type Work = Piece & { span: number; album?: Piece[] };
+
+function albumPiece(prefix: string, file: string, title: string, n: number): Piece {
+  return {
+    id: `${prefix}-${n}`,
+    src: `/art/${file}?v=1`,
+    alt: `${title}, ${n}`,
+    title,
+    medium: "",
+    year: "",
+    tone: "#140e0c",
+  };
+}
+
+export const compositions: Piece[] = [
+  "comp-01.jpg",
+  "comp-02.jpg",
+  "comp-03.jpg",
+  "comp-04.jpg",
+  "comp-05.jpg",
+  "comp-06.jpg",
+  "comp-07.jpg",
+  "comp-08.jpg",
+  "comp-09.jpg",
+].map((file, index) => albumPiece("comp", file, "Мои композиции", index + 1));
+
+export const impasto: Piece[] = [
+  "impasto-01.jpg",
+  "impasto-02.jpg",
+  "impasto-03.jpg",
+  "impasto-04.jpg",
+].map((file, index) => albumPiece("impasto", file, "Копирование картины со смелыми мазками", index + 1));
+
+export const classical: Piece[] = [
+  "classical-01.jpg",
+  "classical-02.jpg",
+  "classical-03.jpg",
+  "classical-04.jpg",
+  "classical-05.jpg",
+  "classical-06.jpg",
+  "classical-07.jpg",
+  "classical-08.jpg",
+  "classical-09.jpg",
+  "classical-10.jpg",
+].map((file, index) => albumPiece("classical", file, "Копирование классических работ великих художников", index + 1));
+
+export const sketches: Piece[] = ["sketch-01.jpg", "sketch-02.jpg", "sketch-03.jpg"].map((file, index) =>
+  albumPiece("sketch", file, "Маленькие эскизы", index + 1),
+);
+
+export const museum: Piece[] = ["museum-01.jpg", "museum-02.jpg", "museum-03.jpg", "museum-04.jpg"].map((file, index) =>
+  albumPiece("museum", file, "Работы из музейной практики", index + 1),
+);
+
+export const large: Piece[] = Array.from({ length: 31 }, (_, index) => {
+  const n = String(index + 1).padStart(2, "0");
+  return albumPiece("large", `large-${n}.jpg`, "Крупномасштабная работа", index + 1);
+});
+
+export const cool: Piece[] = Array.from({ length: 10 }, (_, index) => {
+  const n = String(index + 1).padStart(2, "0");
+  return albumPiece("cool", `cool-${n}.jpg`, "Классные работы", index + 1);
+});
+
+export const national: Piece[] = Array.from({ length: 13 }, (_, index) => {
+  const n = String(index + 1).padStart(2, "0");
+  return albumPiece("nat", `nat-${n}.jpg`, "Национальный натюрморт", index + 1);
+});
+
+export const drawings: Piece[] = Array.from({ length: 4 }, (_, index) => {
+  const n = String(index + 1).padStart(2, "0");
+  return albumPiece("draw", `draw-${n}.jpg`, "Мои рисунки", index + 1);
+});
+
+function work(file: string, title: string, span: number, album?: Piece[]): Work {
+  const id = file.replace(".jpg", "");
+  return { ...localPiece(id, file, title), src: `/art/${file}?v=8`, span, album };
+}
+
+export const workPages: Work[][] = [
+  [
+    work("work-compositions.jpg", "Мои композиции", 4, compositions),
+    work("work-impasto.jpg", "Копирование картины со смелыми мазками", 2, impasto),
+    work("work-classical.jpg", "Копирование классических работ великих художников", 2, classical),
+    work("work-sketch.jpg", "Маленькие эскизы", 2, sketches),
+    work("work-museum.jpg", "Работы из музейной практики", 2, museum),
+    work("work-mountains.jpg", "Крупномасштабная работа — горы", 2),
+    work("work-bouquet.jpg", "Классные работы", 2, cool),
+    work("work-peony.jpg", "Крупномасштабная работа", 2, large),
+    work("work-drawing.jpg", "Мои рисунки", 2, drawings),
+    work("work-still-life.jpg", "Национальный натюрморт", 4, national),
+  ],
+  [
+    work("still-life.jpg", "Цветочный натюрморт", 4),
+    work("dark-bouquet.jpg", "Вечерний букет", 2),
+    work("white-peony.jpg", "Белый пион", 2),
+    work("pink-rose.jpg", "Розовая роза", 2),
+    work("cover-places.jpg", "Другие миры", 2),
+    work("cover-projects.jpg", "Смелые мазки", 2),
+    work("cover-sound.jpg", "Звуковые смеси", 2),
+    work("cover-patterns.jpg", "Узоры и цвет", 2),
+    work("cover-film.jpg", "Плёночный свет", 2),
+    work("work-museum.jpg", "Музейная практика", 4),
+  ],
 ];
+
+export const covers: Piece[] = [
+  "cf-film.jpg|Chasing that film look in the past",
+  "cf-projects.jpg|Selected projects from the last month",
+  "cf-places.jpg|Otherworldly places located on Earth",
+  "cf-sound.jpg|Visualizing distorted sound mixes",
+  "cf-patterns.jpg|Patterns and color inspiration",
+].map((row) => {
+  const [file, title] = row.split("|");
+  const id = file.replace(".jpg", "");
+  return { ...localPiece(id, file, title), src: `/art/${file}?v=1` };
+});
+
+export const slides: Piece[] = [
+  "hero-01.jpg|Woman Reading",
+  "hero-02.jpg|Mountain",
+  "hero-03.jpg|Studio",
+  "hero-04.jpg|Flowers",
+].map((row) => {
+  const [file, title] = row.split("|");
+  const id = file.replace(".jpg", "");
+  return { ...localPiece(id, file, title), src: `/art/${file}?v=1` };
+});
 
 const seen = new Set<string>();
 export const gallery: Piece[] = [
